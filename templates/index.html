@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Readmission Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f4e79;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #1f4e79;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #163954;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: #e8f4ff;
+        }
+
+        .high {
+            color: #c62828;
+        }
+
+        .low {
+            color: #2e7d32;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffe5e5;
+            color: #b00020;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Hospital Readmission Prediction</h1>
+
+    <p style="text-align:center;">
+        Enter patient details to predict the risk of readmission within 30 days.
+    </p>
+
+    <form action="/predict" method="POST">
+
+        <div class="form-grid">
+
+            <div>
+                <label>Age Group</label>
+
+                <select name="age" required>
+                    <option value="[0-10)">[0-10)</option>
+                    <option value="[10-20)">[10-20)</option>
+                    <option value="[20-30)">[20-30)</option>
+                    <option value="[30-40)">[30-40)</option>
+                    <option value="[40-50)">[40-50)</option>
+                    <option value="[50-60)">[50-60)</option>
+                    <option value="[60-70)">[60-70)</option>
+                    <option value="[70-80)">[70-80)</option>
+                    <option value="[80-90)">[80-90)</option>
+                    <option value="[90-100)">[90-100)</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Gender</label>
+
+                <select name="gender" required>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Time in Hospital (Days)</label>
+                <input type="number" name="time_in_hospital"
+                       min="1" max="14" value="3" required>
+            </div>
+
+            <div>
+                <label>Lab Procedures</label>
+                <input type="number" name="num_lab_procedures"
+                       min="0" value="40" required>
+            </div>
+
+            <div>
+                <label>Procedures</label>
+                <input type="number" name="num_procedures"
+                       min="0" value="1" required>
+            </div>
+
+            <div>
+                <label>Medications</label>
+                <input type="number" name="num_medications"
+                       min="0" value="15" required>
+            </div>
+
+            <div>
+                <label>Previous Inpatient Visits</label>
+                <input type="number" name="number_inpatient"
+                       min="0" value="0" required>
+            </div>
+
+            <div>
+                <label>Previous Emergency Visits</label>
+                <input type="number" name="number_emergency"
+                       min="0" value="0" required>
+            </div>
+
+            <div>
+                <label>Previous Outpatient Visits</label>
+                <input type="number" name="number_outpatient"
+                       min="0" value="0" required>
+            </div>
+
+            <div>
+                <label>Number of Diagnoses</label>
+                <input type="number" name="number_diagnoses"
+                       min="1" value="5" required>
+            </div>
+
+        </div>
+
+        <button type="submit">Predict Readmission</button>
+
+    </form>
+
+
+    {% if prediction %}
+
+    <div class="result">
+
+        <h2>Prediction Result</h2>
+
+        {% if prediction == "High Risk" %}
+
+            <h2 class="high">{{ prediction }}</h2>
+
+        {% else %}
+
+            <h2 class="low">{{ prediction }}</h2>
+
+        {% endif %}
+
+        <h3>Readmission Probability: {{ probability }}%</h3>
+
+    </div>
+
+    {% endif %}
+
+
+    {% if error %}
+
+    <div class="error">
+
+        <h3>Error occurred</h3>
+
+        <p>{{ error }}</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

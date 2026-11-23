@@ -1,0 +1,24 @@
+HOSPITAL READMISSION PREDICTION
+MODEL TESTING RESULTS
+
+Test Case 1:
+Patient Profile: Default patient details
+Prediction: Low Risk
+Readmission Probability: 14.82%
+
+Test Case 2:
+Patient Profile: Older patient with multiple previous hospital visits
+Prediction: High Risk
+Readmission Probability: 53.82%
+
+Test Case 3:
+Patient Profile: Patient with fewer previous visits and diagnoses
+Prediction: [Enter your result]
+Readmission Probability: [Enter your probability]
+
+Testing Conclusion:
+The prediction model was tested using different patient input values.
+The model generated different risk predictions based on the patient
+characteristics and medical history entered through the web interface.
+The Flask application successfully displayed the prediction and
+readmission probability.
